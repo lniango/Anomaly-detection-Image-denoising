@@ -59,9 +59,13 @@ def train():
             optimizer.zero_grad()
             
             pred = model(noisy_img)
+            print(f"Image max : {img.min()} - {img.max()} | Prediction max : {pred.min()} - {pred.max()}")
             #print(f"Shape prediction: {pred.shape} | target shape : {label.shape}")
             loss = criterion(pred, img)
-            training_loss += loss
+            training_loss += loss.item()
+            
+            # backpropagation
+            loss.backward()
 
             # Adjust learning weights
             optimizer.step()
@@ -72,7 +76,7 @@ def train():
                 writer.add_image("Noisy Train batch", noisy_img[0], global_step=len(train_loader)//16)
                 writer.add_image("Pred on train set", pred[0], global_step=len(train_loader)//16)
             
-        training_loss += training_loss / len(train_loader)
+        training_loss = training_loss / len(train_loader)
         writer.add_scalar('Training Loss', training_loss, epoch + 1)
 
         # Evaluation
@@ -88,7 +92,7 @@ def train():
                     labelv = labelv.to(device)
                     predv = model(noisy_val)
                     lossv = criterion(predv, val_img)
-                    val_loss += lossv
+                    val_loss += lossv.item()
                     
                     if batch_idx_val == 0:
                         # Display images - Tensorboard
@@ -96,7 +100,7 @@ def train():
                         writer.add_image("Noisy Val batch", noisy_val[0], global_step=len(test_loader)//4)
                         writer.add_image("Pred on val set", predv[0], global_step=len(test_loader)//4)
 
-        val_loss += val_loss / len(test_loader)
+        val_loss = val_loss / len(test_loader)
         writer.add_scalar('Validation loss', val_loss, epoch + 1)
         
 

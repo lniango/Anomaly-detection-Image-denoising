@@ -40,6 +40,7 @@ train_loader = torch.utils.data.DataLoader(
 test_loader = torch.utils.data.DataLoader(
     mnist_dataset_test, batch_size=batch_size_test, shuffle=False)
 
+print(f"Length of train loader - {len(train_loader)}")
 #for img, label in train_loader:
 #    print(f"Shape of img : {img.shape} | Shape of label : {label.shape}")
 
