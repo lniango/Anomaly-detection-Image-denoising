@@ -1,1 +1,6 @@
-/face_data
+face_data/
+models/
+*.pyc
+event.out.tfevents.*
+runs/
+.vscode/

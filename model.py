@@ -19,17 +19,19 @@ class Denoiser(nn.Module):
         
         # Decoding
         #self.deconv3 = nn.ConvTranspose2d(latent_dim, 8, 3)
-        self.deconv2 = nn.ConvTranspose2d(latent_dim, 16, 3)
-        self.deconv1 = nn.ConvTranspose2d(16, 1, 3)
+        self.deconv2 = nn.ConvTranspose2d(latent_dim, 16, 3,\
+            stride=2, padding=1, output_padding=1)
+        self.deconv1 = nn.ConvTranspose2d(16, 1, 3, \
+            stride=2, padding=1, output_padding=1)
         self.sigmoid = nn.Sigmoid()
     
-    def encoder(self, x, latent_dim):
+    def encoder(self, x):
         x = self.maxpool1(self.relu(self.conv1(x)))
         x = self.maxpool2(self.relu(self.conv2(x)))
         return x
         
-    def decoder(self, latent_dim):
-        x = self.maxpool2(self.relu(self.decon2(x)))
+    def decoder(self, x):
+        x = self.relu(self.deconv2(x))
         x = self.sigmoid(self.deconv1(x))
         return x
  
