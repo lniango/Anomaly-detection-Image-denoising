@@ -5,6 +5,7 @@ import torch.nn as nn
 
 class Denoiser(nn.Module):
     # https://arxiv.org/pdf/2101.07937
+    #https://www.geeksforgeeks.org/machine-learning/implement-convolutional-autoencoder-in-pytorch-with-cuda/
     def __init__(self, latent_dim):
         super().__init__()
         
