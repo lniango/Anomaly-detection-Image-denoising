@@ -17,13 +17,6 @@ mnist_dataset_train = datasets.MNIST(
 mnist_dataset_test = datasets.MNIST(
     root='./data', train=False, download=True, transform=transform)
 
-batch_size = 128
-
-train_loader = torch.utils.data.DataLoader(
-    mnist_dataset_train, batch_size=batch_size, shuffle=True)
-test_loader = torch.utils.data.DataLoader(
-    mnist_dataset_test, batch_size=5, shuffle=False)
-
 """
 # Take a batch
 images, labels = next(iter(train_loader))
